@@ -3,7 +3,7 @@ The easiest way to convert HEIC images to JPEG with PHP and Laravel framework.
 
 ## Installation
 ```
-composer require maestroerror/heic-to-jpg
+composer require maestroerror/php-heic-to-jpg
 ```
 
 ## Usage
