@@ -24,13 +24,13 @@ func main() {
 			log.Fatal(err)
 		}
 	} else {
-		log.Println("Not enough arguments, needs: [command] [file1.heic] [file2.jpg]")
+		fmt.Println("Not enough arguments, needs: [command] [file1.heic] [file2.jpg]")
 		Shutdown()
 	}
 
-	path := pwd() + "/" + os.Args[2]
+	path := "--" + os.Args[2] + "--"
 	
-	log.Println("JPG:", path)
+	fmt.Println("JPG:", path)
 	Shutdown()
 }
 
@@ -114,6 +114,7 @@ func newWriterExif(w io.Writer, exif []byte) (io.Writer, error) {
 }
 
 func Shutdown() {
+	fmt.Println("Created by MaestroError")
 	os.Exit(1)
 }
 

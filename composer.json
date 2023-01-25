@@ -1,0 +1,22 @@
+{
+    "name": "maestroerror/heic-to-jpg",
+    "description": "Converts one HEIC photo to JPG type",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "maestroerror\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "maestroerror",
+            "email": "revaz.gh@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "bin": [
+        "bin/heicToJpg",
+        "bin/heicToJpgWin"
+	]
+}

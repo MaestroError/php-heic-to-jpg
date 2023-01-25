@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+// unset first CLI argument
+unset($argv[0]);
+
+$output = [];
+// Get arguments as string
+$args = implode(' ', $argv);
+
+// execute binary
+exec(__DIR__."/heicToJpg $args", $output);
+
+// Print output line by line
+foreach ($output as $line) {
+    echo $line . "\n";
+}
