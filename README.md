@@ -10,9 +10,9 @@ composer require maestroerror/php-heic-to-jpg
 Using the class "HeicToJpeg" is extremely simple. You need full location of any HEIC image to pass in "convert" function and call "saveAs" (save as file) or "get" (get file contents) methods.
 ```php
 // save
-maestroerror\HeicToJpg::convert("image1.heic")->saveAs("image1.jpg");
+Maestroerror\HeicToJpg::convert("image1.heic")->saveAs("image1.jpg");
 // 2. get content (binary) of converted JPG
-$jpg = maestroerror\HeicToJpg::convert("image1.heic")->get();
+$jpg = Maestroerror\HeicToJpg::convert("image1.heic")->get();
 ```
 
 ## Credits
