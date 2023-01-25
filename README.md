@@ -1,5 +1,5 @@
 # php-heic-to-jpg
-The easiest way to convert HEIC images to JPEG with PHP and Laravel framework.     
+The easiest way to convert HEIC images to JPEG with PHP and Laravel framework. It uses binary file created with Go language and has no dependencies on any other PHP libraries, extensions or third-part software       
 
 ## Installation
 ```
@@ -16,6 +16,7 @@ $jpg = maestroerror\HeicToJpg::convert("image1.heic")->get();
 ```
 
 ## Credits
+I would like to say thanks to these people. Their work helped me to build heicToJpg file with Go:
 - heif parser by @bradfitz (https://github.com/go4org/go4/tree/master/media/heif)
 - libde265 (https://github.com/strukturag/libde265)
 - implementation learnt from libheif (https://github.com/strukturag/libheif)

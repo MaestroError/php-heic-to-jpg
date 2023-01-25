@@ -1,6 +1,6 @@
 {
     "name": "maestroerror/php-heic-to-jpg",
-    "description": "Converts one HEIC photo to JPG type",
+    "description": "Converts HEIC image to JPG type, without any dependencies",
     "license": "MIT",
     "autoload": {
         "psr-4": {
