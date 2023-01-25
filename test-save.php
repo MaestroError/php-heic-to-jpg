@@ -2,4 +2,4 @@
 
 include "src/HeicToJpg.php";
 
-maestroerror\HeicToJpg::convert("IMG_5016.HEIC")->saveAs("jpg-from-php.jpg");
+maestroerror\HeicToJpg::convert("image1.heic")->saveAs("jpg-from-php.jpg");
