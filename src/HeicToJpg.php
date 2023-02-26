@@ -25,11 +25,44 @@ class HeicToJpg {
     protected string $heic;
 
     /**
+     * Executable file name from bin folder
+     *
+     * @var string
+     */
+    protected string $exeName = "heicToJpg";
+
+    /**
+     * OS of server
+     *
+     * @var string
+     */
+    protected string $os = "linux";
+
+    /**
+     * Architecture of server
+     *
+     * @var string
+     */
+    protected string $arch = "amd64";
+
+    /**
      * Takes full location of file as a string
      *
      * @param string $source
      */
     public function convertImage(string $source) {
+        $this->processImage($source);
+        $this->extractBinary();
+        return $this;
+    }
+
+    /**
+     * The same as convertImage but for MacOS users
+     *
+     * @param string $source
+     */
+    public function convertImageMac(string $source, $arch = "amd64") {
+        $this->setDarwinExe($arch);
         $this->processImage($source);
         $this->extractBinary();
         return $this;
@@ -57,6 +90,30 @@ class HeicToJpg {
     }
 
     /**
+     * Checks is used on macOS or not
+     *
+     * @return void
+     */
+    public function checkMacOS() {
+        $os = strtolower(php_uname('s'));
+        $arch = strtolower(php_uname('m'));
+
+        if (str_contains($os, 'macos') || str_contains($os, 'os x') || str_contains($os, 'darwin') || str_contains($os, 'macintosh')) {
+            $this->os = "darwin";
+        }
+
+        if (str_contains($arch, "x86_64") || str_contains($arch, "amd64")) {
+            $this->arch = "amd64";
+        }
+
+        if (str_contains($arch, "arm")) {
+            $this->arch = "arm64";
+        }
+
+        $this->checkDarwinExe();
+    }
+
+    /**
      * Runs heicToJpg CLI tool to convert file
      *
      * @param string $source
@@ -65,7 +122,8 @@ class HeicToJpg {
     protected function processImage(string $source) {
         $this->heic = $source;
         $newFileName = $source . "-" . uniqid(rand(), true);
-        exec(__DIR__."/../bin/heicToJpg $source $newFileName", $output);
+        $exeName = $this->exeName;
+        exec(__DIR__."/../bin/$exeName $source $newFileName", $output);
         foreach ($output as $line) {
             $parsed = $this->getStringBetween($line, '--', '--');
             if (!empty($parsed)) {
@@ -118,8 +176,41 @@ class HeicToJpg {
         }
     }
 
+    /**
+     * Check os and arch properties to set executable name correctly
+     *
+     * @return void
+     */
+    private function checkDarwinExe() {
+        if ($this->os == "darwin" && $this->arch == "amd64") {
+            $this->exeName = "php-heic-to-jpg-darwin-amd64";
+        }
+        if ($this->os == "darwin" && $this->arch == "arm64") {
+            $this->exeName = "php-heic-to-jpg-darwin-arm64";
+        }
+    }
+
+    /**
+     * Sets macOS executable by architecture
+     *
+     * @param string $arch
+     * @return void
+     */
+    private function setDarwinExe(string $arch) {
+        if ($arch == "arm64") {
+            $this->exeName = "php-heic-to-jpg-darwin-arm64";
+        } else {
+            $this->exeName = "php-heic-to-jpg-darwin-amd64";
+        }
+    }
+    
     public static function convert(string $source)
     {
-        return (new self)->convertImage($source);
+        return (new self)->checkMacOS()->convertImage($source);
+    }
+
+    public static function convertOnMac(string $source, $arch = "amd64")
+    {
+        return (new self)->convertImageMac($source, $arch);
     }
 }
