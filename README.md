@@ -21,3 +21,9 @@ I would like to say thanks to these people. Their work helped me to build heicTo
 - libde265 (https://github.com/strukturag/libde265)
 - implementation learnt from libheif (https://github.com/strukturag/libheif)
 - Edd Turtle (https://gophercoding.com/convert-heic-to-jpeg-go/)
+- crazy-max/xgo (https://github.com/crazy-max/xgo)
+
+
+#### Log
+**27/02/2023**       
+Built executables for MacOs (OS X / Darwin) with command `sudo /home/maestroerror/go/bin/xgo --targets=darwin/*  github.com/MaestroError/php-heic-to-jpg`
