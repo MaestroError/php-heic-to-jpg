@@ -111,6 +111,8 @@ class HeicToJpg {
         }
 
         $this->checkDarwinExe();
+
+        return $this;
     }
 
     /**
