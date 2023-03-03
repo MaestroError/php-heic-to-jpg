@@ -130,7 +130,7 @@ class HeicToJpg {
         foreach ($output as $line) {
             $parsed = $this->getStringBetween($line, '--', '--');
             if (!empty($parsed)) {
-                // $this->jpg = $parsed;
+                $this->jpg = $parsed;
                 break;
             }
         }
