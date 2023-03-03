@@ -125,7 +125,8 @@ class HeicToJpg {
         $this->heic = $source;
         $newFileName = $source . "-" . uniqid(rand(), true);
         $exeName = $this->exeName;
-        exec(__DIR__."/../bin/$exeName $source $newFileName", $output);
+        $command = __DIR__."/../bin/$exeName $source $newFileName";
+        exec($command, $output);
         foreach ($output as $line) {
             $parsed = $this->getStringBetween($line, '--', '--');
             if (!empty($parsed)) {
@@ -134,7 +135,8 @@ class HeicToJpg {
             }
         }
         if (empty($this->jpg)) {
-            throw new \RuntimeException("Couldn't convert HEIC to JPG: " . implode("\\n", $output));
+            $error = isArray($output) ? implode("\\n", $output) : $output;
+            throw new \RuntimeException("Couldn't convert HEIC to JPG: " . $error . " | Bin used: " . $this->exeName . " HEIC: " . $source . " Full Command: " . $command);
         }
     }
 
