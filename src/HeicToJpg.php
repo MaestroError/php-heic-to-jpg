@@ -130,13 +130,13 @@ class HeicToJpg {
         foreach ($output as $line) {
             $parsed = $this->getStringBetween($line, '--', '--');
             if (!empty($parsed)) {
-                $this->jpg = $parsed;
+                // $this->jpg = $parsed;
                 break;
             }
         }
         if (empty($this->jpg)) {
-            $error = isArray($output) ? implode("\\n", $output) : $output;
-            throw new \RuntimeException("Couldn't convert HEIC to JPG: " . $error . " | Bin used: " . $this->exeName . " HEIC: " . $source . " Full Command: " . $command);
+            $error = \is_array($output) ? implode("\\n", $output) : $output;
+            throw new \RuntimeException("Couldn't convert HEIC to JPG: '" . $error . "' | Bin used: '" . $this->exeName . "' HEIC: '" . $source . "' Full Command: '" . $command . "'");
         }
     }
 
