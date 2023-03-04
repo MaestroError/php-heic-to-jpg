@@ -10,12 +10,12 @@ jobs:
       matrix:
         php-versions: [ '8.2' ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: xdebug, zip, pgsql
+          extensions: xdebug, zip, pgsql, fileinfo
       
       - name: Install Dependencies
         run: composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
@@ -30,12 +30,12 @@ jobs:
       matrix:
         php-versions: [ '8.2' ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: xdebug, zip, pgsql
+          extensions: xdebug, zip, pgsql, fileinfo
       
       - name: Install Dependencies
         run: composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
@@ -50,12 +50,12 @@ jobs:
       matrix:
         php-versions: [ '8.2' ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: xdebug, zip, pgsql
+          extensions: xdebug, zip, pgsql, fileinfo
       
       - name: Install Dependencies
         run: composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
