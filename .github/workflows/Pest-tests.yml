@@ -1,0 +1,24 @@
+name: Pest-Tests
+
+on: [push]
+
+jobs:
+  tests-ubuntu:
+    runs-on: ubuntu-20.04
+    strategy:
+      max-parallel: 3
+      matrix:
+        php-versions: [ '8.0' ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: xdebug, zip, pgsql
+      
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Execute tests
+        run: vendor/bin/pest
