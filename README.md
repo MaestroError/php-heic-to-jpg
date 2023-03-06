@@ -34,6 +34,6 @@ I would like to say thanks to these people. Their work helped me to build heicTo
 
 #### Log
 **27/02/2023**       
-Built executables for MacOs (OS X / Darwin) with command `sudo /home/maestroerror/go/bin/xgo --targets=darwin/*  github.com/MaestroError/php-heic-to-jpg`
+Built executables for MacOs (OS X / Darwin) with command `sudo /home/maestroerror/go/bin/xgo --targets=darwin/*  github.com/MaestroError/php-heic-to-jpg`        
 **04/03/2023**         
-Added pest test. Run it with `./vendor/bin/pest`
+Added pest test and workflows for linux, windows and macos. Run tests locally with `./vendor/bin/pest`
