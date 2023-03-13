@@ -125,7 +125,7 @@ class HeicToJpg {
         $this->heic = $source;
         $newFileName = $source . "-" . uniqid(rand(), true);
         $exeName = $this->exeName;
-        $command = __DIR__."/../bin/$exeName $source $newFileName";
+        $command = __DIR__.'/../bin/'.$exeName.' "'.$source.'" "'.$newFileName.'"';
         exec($command, $output);
         foreach ($output as $line) {
             $parsed = $this->getStringBetween($line, '--', '--');
@@ -217,4 +217,37 @@ class HeicToJpg {
     {
         return (new self)->convertImageMac($source, $arch);
     }
+
+    /**
+     * Check if file is in HEIC format.
+     *
+     * @param string $path
+     * @return bool
+     */
+    public static function isHeic(string $path): bool
+    {
+        $h = fopen($path, 'rb');
+        $f = fread($h, 12);
+        fclose($h);
+        $magicNumber = strtolower(trim(substr($f, 8)));
+
+        $heicMagicNumbers = [
+            'heic', // official
+            'mif1', // unofficial but can be found in the wild
+            'ftyp', // 10bit images, or anything that uses h265 with range extension
+            'hevc', // brands for image sequences
+            'hevx', // brands for image sequences
+            'heim', // multiview
+            'heis', // scalable
+            'hevm', // multiview sequence
+            'hevs', // multiview sequence
+        ];
+
+        if (in_array($magicNumber, $heicMagicNumbers)) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
