@@ -24,7 +24,7 @@ Maestroerror\HeicToJpg::convertOnMac("image1.heic", "arm64")->saveAs("image1.jpg
 ```
 
 #### isHeic method      
-Before converting, you can use the isHeic method (contributed by @pbs-dg) to check if a file is really HEIC format.
+Before converting, you can use the isHeic method (contributed by [pbs-dg](https://github.com/pbs-dg)) to check if a file is HEIC format.
 ```php
 $fileIsHeic = HeicToJpg::isHeic("image.heic");
 if ($fileIsHeic) {
