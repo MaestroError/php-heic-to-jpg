@@ -23,6 +23,15 @@ It should detect the OS itself, but if you want to specify architecture, it is r
 Maestroerror\HeicToJpg::convertOnMac("image1.heic", "arm64")->saveAs("image1.jpg");
 ```
 
+#### isHeic method      
+Before converting, you can use the isHeic method (contributed by @pbs-dg) to check if a file is really HEIC format.
+```php
+$fileIsHeic = HeicToJpg::isHeic("image.heic");
+if ($fileIsHeic) {
+    // Your code
+}
+```
+
 ## Credits
 I would like to say thanks to these people. Their work helped me to build heicToJpg file with Go:
 - heif parser by @bradfitz (https://github.com/go4org/go4/tree/master/media/heif)
