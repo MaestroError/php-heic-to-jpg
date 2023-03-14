@@ -1,12 +1,11 @@
 <?php
 
-include "src/HeicToJpg.php";
 use Maestroerror\HeicToJpg;
 
 test('Converts and saves to the file', function () {
     $resultImg = "saved-as-jpg.jpg";
     // Save converted image
-    HeicToJpg::convert("image1.heic")->saveAs($resultImg);
+    HeicToJpg::convert(__dir__ . "/images/image1.heic")->saveAs($resultImg);
     // Check mime type
     $mime = mime_content_type($resultImg);
     // Check image exists
@@ -21,7 +20,7 @@ test('Converts and saves to the file', function () {
 test('Converts and gives content', function () {
     $resultImg = "saved-with-php.jpg";
     // Get content of converted image
-    $jpg = HeicToJpg::convert("image1.heic")->get($resultImg);
+    $jpg = HeicToJpg::convert(__dir__ . "/images/image1.heic")->get($resultImg);
     // Save image
     file_put_contents($resultImg, $jpg);
     // Get mime type
