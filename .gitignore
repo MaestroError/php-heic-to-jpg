@@ -19,5 +19,6 @@
 *.HEIC
 
 !bin/heicToJpg.exe
+!tests/Unit/images/*
 
 vendor
