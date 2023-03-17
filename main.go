@@ -44,10 +44,12 @@ func convertHeicToJpg(input, output string) error {
 	}
 	defer fileInput.Close()
 
-	// Extract exif to add back in after conversion
+	// Extract exif data
 	exif, err := goheif.ExtractExif(fileInput)
 	if err != nil {
-		return err
+		log.Println(err)
+		// Not use exif if not exists
+		exif = nil
 	}
 
 	img, err := goheif.Decode(fileInput)
@@ -61,7 +63,7 @@ func convertHeicToJpg(input, output string) error {
 	}
 	defer fileOutput.Close()
 
-	// Write both convert file + exif data back
+	// Write both the converted file and the exif data back
 	w, _ := newWriterExif(fileOutput, exif)
 	err = jpeg.Encode(w, img, nil)
 	if err != nil {
