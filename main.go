@@ -21,7 +21,8 @@ func main() {
 	if len(os.Args) > 2 {
 		err := convertHeicToJpg(os.Args[1], os.Args[2])
 		if err != nil {
-			log.Fatal(err)
+			fmt.Printf("Error while converting %s: %v \n", os.Args[1], err)
+			Shutdown()
 		}
 	} else {
 		fmt.Println("Not enough arguments, needs: [command] [file1.heic] [file2.jpg]")
@@ -29,7 +30,7 @@ func main() {
 	}
 
 	path := "--" + os.Args[2] + "--"
-	
+
 	fmt.Println("JPG:", path)
 	Shutdown()
 }
