@@ -51,6 +51,7 @@ class HeicToJpg {
      * @param string $source
      */
     public function convertImage(string $source) {
+        $this->checkLinuxOS();
         $this->processImage($source);
         $this->extractBinary();
         return $this;
@@ -92,9 +93,9 @@ class HeicToJpg {
     /**
      * Checks is used on macOS or not
      *
-     * @return void
+     * @return self
      */
-    public function checkMacOS() {
+    public function checkMacOS(): self {
         $os = strtolower(php_uname('s'));
         $arch = strtolower(php_uname('m'));
 
@@ -111,6 +112,23 @@ class HeicToJpg {
         }
 
         $this->checkDarwinExe();
+
+        return $this;
+    }
+
+    public function checkLinuxOS(): self {
+        $os = strtolower(php_uname('s'));
+        $arch = strtolower(php_uname('m'));
+
+        if (str_contains($os, 'linux')) {
+            $this->os = "linux";
+        }
+
+        if (str_contains($arch, "aarch64")){
+            $this->arch = "arm64";
+        }
+
+        $this->checkLinuxExe();
 
         return $this;
     }
@@ -180,6 +198,13 @@ class HeicToJpg {
         }
     }
 
+    private function checkLinuxExe(): void
+    {
+        if ($this->os == "linux" && $this->arch == "arm64") {
+            $this->exeName = "php-heic-to-jpg-linux-arm64";
+        }
+    }
+
     /**
      * Check os and arch properties to set executable name correctly
      *
@@ -207,10 +232,13 @@ class HeicToJpg {
             $this->exeName = "php-heic-to-jpg-darwin-amd64";
         }
     }
-    
+
     public static function convert(string $source)
     {
-        return (new self)->checkMacOS()->convertImage($source);
+        return (new self)
+            ->checkMacOS()
+            ->checkLinuxOS()
+            ->convertImage($source);
     }
 
     public static function convertOnMac(string $source, $arch = "amd64")
