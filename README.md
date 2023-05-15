@@ -49,3 +49,7 @@ I would like to say thanks to these people. Their work helped me to build heicTo
 Built executables for MacOs (OS X / Darwin) with command `sudo /home/maestroerror/go/bin/xgo --targets=darwin/*  github.com/MaestroError/php-heic-to-jpg`        
 **04/03/2023**         
 Added pest test and workflows for linux, windows and macos. Run tests locally with `./vendor/bin/pest`
+
+
+##### To Do
+- Try to use https://github.com/strukturag/libheif example with mdat files on Ubuntu        

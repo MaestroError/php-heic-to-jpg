@@ -246,6 +246,23 @@ class HeicToJpg {
         return (new self)->convertImageMac($source, $arch);
     }
 
+    public static function convertFromUrl(string $url) {
+        // Download image
+        $newFileName = "HTTP" . "-" . uniqid(rand(), true);
+        file_put_contents($newFileName, file_get_contents($url));
+        // Convert image
+        $object = (new self)
+            ->checkMacOS()
+            ->checkLinuxOS()
+            ->convertImage($newFileName);
+
+        // Remove downloaded image
+        unlink($newFileName);
+
+        // Return converted object
+        return $object;
+    }
+
     /**
      * Check if file is in HEIC format.
      *
