@@ -52,4 +52,9 @@ Added pest test and workflows for linux, windows and macos. Run tests locally wi
 
 
 ##### To Do
-- Try to use https://github.com/strukturag/libheif example with mdat files on Ubuntu        
+- Try to use https://github.com/strukturag/libheif example with mdat files on Ubuntu +
+- Add instructions for [heif-converter-image](https://github.com/MaestroError/heif-converter-image) as CLI
+- Find out if it can be used with docker CLI command from PHP, add in docs if yes
+- Build executables and draft a release
+- Answer and close issue
+        
