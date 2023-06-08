@@ -25,7 +25,7 @@ func main() {
 			Shutdown()
 		}
 	} else {
-		fmt.Println("Not enough arguments, needs: [command] [file1.heic] [file2.jpg]")
+		fmt.Println("Not enough arguments, needs: [executable] [file1.heic] [file2.jpg]")
 		Shutdown()
 	}
 
