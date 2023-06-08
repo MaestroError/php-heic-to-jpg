@@ -46,6 +46,15 @@ class HeicToJpg {
     protected string $arch = "amd64";
 
     /**
+     * Location of the "heif-converter-image" package's executable
+     * 
+     * @var string
+     */
+    protected string $libheifConverterLocation = "";
+
+    protected string $libheifOutput = "";
+
+    /**
      * Takes full location of file as a string
      *
      * @param string $source
@@ -88,6 +97,12 @@ class HeicToJpg {
     public function get() {
         $this->exit();
         return $this->binary;
+    }
+
+    
+    public function setConverterLocation(string $path) {
+        $this->libheifConverterLocation = $path;
+        return $this;
     }
 
     /**
@@ -133,6 +148,23 @@ class HeicToJpg {
         return $this;
     }
 
+    public function checkWindowsOS(): self {
+        $os = strtolower(php_uname('s'));
+        $arch = strtolower(php_uname('m'));
+
+        if (str_contains($os, 'windows') || str_contains($os, 'win')) {
+            $this->os = "windows";
+        }
+
+        $this->checkWindowsExe();
+        
+        return $this;
+    }
+
+    public function checkOS() {
+        return $this->checkLinuxOS()->checkMacOS()->checkWindowsOS();
+    }
+
     /**
      * Runs heicToJpg CLI tool to convert file
      *
@@ -154,10 +186,33 @@ class HeicToJpg {
         }
         if (empty($this->jpg)) {
             $error = \is_array($output) ? implode("\\n", $output) : $output;
-            // ./vendor/bin/heif-converter-linux heic input.heic output.png
-            // $this->tryWithLibheif();
-            throw new \RuntimeException("Couldn't convert HEIC to JPG: '" . $error . "' | Bin used: '" . $this->exeName . "' HEIC: '" . $source . "' Full Command: '" . $command . "'");
+            // Try to convert with libheif
+            if (!$this->tryToConvertWithLibheif($source, $newFileName)) {
+                throw new \RuntimeException("Couldn't convert HEIC to JPG: '" . $error . "' | Bin used: '" . $this->exeName . "' HEIC: '" . $source . "' Full Command: '" . $command . "'" . " Output from heif-converter-image exe: " . $this->libheifOutput);
+            }
         }
+    }
+
+    protected function tryToConvertWithLibheif($source, $newFile) {
+        // ./vendor/bin/heif-converter-linux heic input.heic output.png
+        if (empty($this->libheifConverterLocation)) {
+            $this->libheifConverterLocation = __DIR__.'/../bin/' . "heif-converter-" . $this->os;
+        }
+        // If libheif converter is available, try to convert
+        if (file_exists($this->libheifConverterLocation)) {
+            $command = $this->libheifConverterLocation . ' heic "' . $source . '" "' . $newFile . '"';
+            exec($command, $output);
+            if (file_exists($newFile)) {
+                $this->jpg = $newFile;
+                return true;
+            } else {
+                foreach ($output as $line) {
+                    $this->libheifOutput .= $line;
+                }
+                return false;
+            }
+        }
+        return false;
     }
 
     /**
@@ -207,6 +262,13 @@ class HeicToJpg {
         }
     }
 
+    private function checkWindowsExe(): void
+    {
+        if ($this->os == "windows") {
+            $this->exeName = "heicToJpg.exe";
+        }
+    }
+
     /**
      * Check os and arch properties to set executable name correctly
      *
@@ -238,8 +300,7 @@ class HeicToJpg {
     public static function convert(string $source)
     {
         return (new self)
-            ->checkMacOS()
-            ->checkLinuxOS()
+            ->checkOS()
             ->convertImage($source);
     }
 
@@ -254,8 +315,7 @@ class HeicToJpg {
         file_put_contents($newFileName, file_get_contents($url));
         // Convert image
         $object = (new self)
-            ->checkMacOS()
-            ->checkLinuxOS()
+            ->checkOS()
             ->convertImage($newFileName);
 
         // Remove downloaded image
