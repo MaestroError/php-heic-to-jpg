@@ -200,6 +200,7 @@ class HeicToJpg {
         }
         // If libheif converter is available, try to convert
         if (file_exists($this->libheifConverterLocation)) {
+            $newFile = $newFile . ".jpg";
             $command = $this->libheifConverterLocation . ' heic "' . $source . '" "' . $newFile . '"';
             exec($command, $output);
             if (file_exists($newFile)) {
@@ -297,16 +298,17 @@ class HeicToJpg {
         }
     }
 
-    public static function convert(string $source)
+    public static function convert(string $source, string $converterPath = "")
     {
         return (new self)
             ->checkOS()
+            ->setConverterLocation($converterPath)
             ->convertImage($source);
     }
 
-    public static function convertOnMac(string $source, $arch = "amd64")
+    public static function convertOnMac(string $source, string $arch = "amd64", string $converterPath = "")
     {
-        return (new self)->convertImageMac($source, $arch);
+        return (new self)->setConverterLocation($converterPath)->convertImageMac($source, $arch);
     }
 
     public static function convertFromUrl(string $url) {

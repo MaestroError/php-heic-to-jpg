@@ -25,5 +25,8 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "require": {
+        "maestroerror/heif-converter": "dev-maestro"
     }
 }
