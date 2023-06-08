@@ -162,7 +162,7 @@ class HeicToJpg {
     }
 
     public function checkOS() {
-        return $this->checkLinuxOS()->checkMacOS()->checkWindowsOS();
+        return $this->checkWindowsOS()->checkLinuxOS()->checkMacOS();
     }
 
     /**
