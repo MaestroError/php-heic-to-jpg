@@ -2,6 +2,7 @@
 The easiest way to convert HEIC/HEIF images to JPEG with PHP and Laravel framework. It uses binary file created with Go language and has no dependencies on any other PHP libraries, extensions or third-part software       
 - [Installation](#installation)
 - [Usage](#usage)
+    - [Mdat issue](#mdat-issue)
 - [Credits](#credits)
           
 ## Installation       
@@ -35,6 +36,26 @@ if ($fileIsHeic) {
 }
 ```
 
+#### Handling 'mdat' File Conversion Issues
+
+If you encounter an issue where the module cannot convert certain images produced by Samsung devices (detailed in this [issue](https://github.com/MaestroError/php-heic-to-jpg/issues/15)), resulting in the error `error reading "meta" box: got box type "mdat" instead`, you can take the following steps:
+
+[heif-converter-image](https://github.com/MaestroError/heif-converter-image) is already required by composer in this (php-heic-to-jpg) package. `heif-converter-image` depends on [libheif](https://github.com/strukturag/libheif) and provides installation scripts for various platforms refer to it's [documentation]((https://github.com/MaestroError/heif-converter-image)).
+
+- Ensure you have `maestroerror/heif-converter` required in composer by running `composer require maestroerror/heif-converter`.
+
+- Make sure libheif is installed on your system. You can check the [libheif](https://github.com/strukturag/libheif) for installation instructions or use installation script for your platform provided by [heif-converter-image](https://github.com/MaestroError/heif-converter-image).
+
+The `php-heic-to-jpg` package automatically detects the presence of the `heif-converter-image` package and will attempt to use its Command Line Interface (CLI) executable for conversion.
+
+In case the package cannot find the `heif-converter-image` CLI, you can specify the path as an argument in the `convert` and `convertOnMac` methods like so:
+
+```php
+HeicToJpg::convert("image.heic", "path/to/your/bin/heif-converter-{linux/windows/macos}")->saveAs("image.jpg");
+HeicToJpg::convertOnMac("image.heic", "arm64",  "path/to/your/bin/heif-converter-{linux/windows/macos}")->saveAs("image.jpg");
+```
+With these steps, you should be able to handle the conversion of images that were previously causing issues.
+
 ## Credits
 I would like to say thanks to these people. Their work helped me to build heicToJpg file with Go:
 - heif parser by @bradfitz (https://github.com/go4org/go4/tree/master/media/heif)
@@ -56,5 +77,5 @@ Added pest test and workflows for linux, windows and macos. Run tests locally wi
 - Add instructions for [heif-converter-image](https://github.com/MaestroError/heif-converter-image) as CLI
 - Find out if it can be used with docker CLI command from PHP, add in docs if yes
 - Build executables and draft a release
-- Answer and close issue
+- Answer and close issues
         
