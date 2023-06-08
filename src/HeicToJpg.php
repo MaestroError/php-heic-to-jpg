@@ -154,6 +154,8 @@ class HeicToJpg {
         }
         if (empty($this->jpg)) {
             $error = \is_array($output) ? implode("\\n", $output) : $output;
+            // ./vendor/bin/heif-converter-linux heic input.heic output.png
+            // $this->tryWithLibheif();
             throw new \RuntimeException("Couldn't convert HEIC to JPG: '" . $error . "' | Bin used: '" . $this->exeName . "' HEIC: '" . $source . "' Full Command: '" . $command . "'");
         }
     }
