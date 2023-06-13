@@ -4,6 +4,7 @@ The easiest way to convert HEIC/HEIF images to JPEG with PHP and Laravel framewo
 - [Usage](#usage)
     - [For MacOS users](#for-macos-users)
     - [isHeic method](#isheic-method)
+    - [convertFromUrl method](#convertfromurl-method)
     - [Mdat issue](##handling-mdat-file-conversion-issues)
 - [Credits](#credits)
           
@@ -38,6 +39,12 @@ if ($fileIsHeic) {
 }
 ```
 
+#### convertFromUrl method      
+If your image is available publicly, you can easily convert and save it in your file system using `convertFromUrl` method:
+```php
+Maestroerror\HeicToJpg::convertFromUrl("https://github.com/MaestroError/php-heic-to-jpg/raw/maestro/tests/Unit/images/image1.heic")->saveAs("image1.jpg");
+```
+
 #### Handling 'mdat' File Conversion Issues
 
 If you encounter an issue where the module cannot convert certain images produced by Samsung devices (detailed in this [issue](https://github.com/MaestroError/php-heic-to-jpg/issues/15)), resulting in the error `error reading "meta" box: got box type "mdat" instead`, you can take the following steps:
@@ -54,7 +61,8 @@ In case the package cannot find the `heif-converter-image` CLI, you can specify 
 
 ```php
 HeicToJpg::convert("image.heic", "path/to/your/bin/heif-converter-{linux/windows/macos}")->saveAs("image.jpg");
-HeicToJpg::convertOnMac("image.heic", "arm64",  "path/to/your/bin/heif-converter-{linux/windows/macos}")->saveAs("image.jpg");
+HeicToJpg::convertOnMac("image.heic", "arm64", "path/to/your/bin/heif-converter-macos")->saveAs("image.jpg");
+HeicToJpg::convertFromUrl("SOME_URL", "path/to/your/bin/heif-converter-{linux/windows/macos}")->saveAs("image.jpg");
 ```
 With these steps, you should be able to handle the conversion of images that were previously causing issues.
 
@@ -75,9 +83,5 @@ Added pest test and workflows for linux, windows and macos. Run tests locally wi
 
 
 ##### To Do
-- Try to use https://github.com/strukturag/libheif example with mdat files on Ubuntu +
-- Add instructions for [heif-converter-image](https://github.com/MaestroError/heif-converter-image) as CLI
 - Find out if it can be used with docker CLI command from PHP, add in docs if yes
-- Build executables and draft a release
-- Answer and close issues
         

@@ -311,13 +311,14 @@ class HeicToJpg {
         return (new self)->setConverterLocation($converterPath)->convertImageMac($source, $arch);
     }
 
-    public static function convertFromUrl(string $url) {
+    public static function convertFromUrl(string $url, string $converterPath = "") {
         // Download image
         $newFileName = "HTTP" . "-" . uniqid(rand(), true);
         file_put_contents($newFileName, file_get_contents($url));
         // Convert image
         $object = (new self)
             ->checkOS()
+            ->setConverterLocation($converterPath)
             ->convertImage($newFileName);
 
         // Remove downloaded image
