@@ -27,6 +27,6 @@
         }
     },
     "require": {
-        "maestroerror/heif-converter": "dev-maestro"
+        "maestroerror/heif-converter": "0.1"
     }
 }
