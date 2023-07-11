@@ -175,7 +175,7 @@ class HeicToJpg {
         $this->heic = $source;
         $newFileName = $source . "-" . uniqid(rand(), true);
         $exeName = $this->exeName;
-        $command = __DIR__.'/../bin/'.$exeName.' "'.$source.'" "'.$newFileName.'"';
+        $command = __DIR__.'/../bin/'.$exeName.' "'.$source.'" "'.$newFileName.'" 2>&1';
         exec($command, $output);
         foreach ($output as $line) {
             $parsed = $this->getStringBetween($line, '--', '--');
