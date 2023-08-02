@@ -139,7 +139,10 @@ class HeicToJpg {
             $this->os = "linux";
         }
 
-        if (str_contains($arch, "aarch64")){
+        // Fix for the Debian (10/11 Versions), visit the issue for more info (https://github.com/MaestroError/php-heic-to-jpg/issues/22)
+        $debian = str_contains($arch, "x86_64") && $this->os == "linux";
+
+        if (str_contains($arch, "aarch64") || $debian){
             $this->arch = "arm64";
         }
 
