@@ -32,7 +32,7 @@ Maestroerror\HeicToJpg::convertOnMac("image1.heic", "arm64")->saveAs("image1.jpg
 ```
          
 #### Force arm64 for linux
-In case of linux, for some reason, if it doesn't detect your architecture correct or just the `php-heic-to-jpg-linux-arm64` binary is working for you well, you can force it to use in `convert` and `convertFromUrl` by passing true as third argument:
+In case of linux, for some reason, if it doesn't detect your architecture correct or just the `php-heic-to-jpg-linux-arm64` binary is working for you well, (From v1.0.4) you can force it to use in `convert` and `convertFromUrl` by passing true as third argument:
 ```php
 Maestroerror\HeicToJpg::convert("image1.heic", "", true)->saveAs("image.jpg");
 ```
