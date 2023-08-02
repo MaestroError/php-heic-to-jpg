@@ -3,6 +3,7 @@ The easiest way to convert HEIC/HEIF images to JPEG with PHP and Laravel framewo
 - [Installation](#installation)
 - [Usage](#usage)
     - [For MacOS users](#for-macos-users)
+    - [Force arm64 for linux](#force-arm64-for-linux)
     - [isHeic method](#isheic-method)
     - [convertFromUrl method](#convertfromurl-method)
     - [Mdat issue](##handling-mdat-file-conversion-issues)
@@ -28,6 +29,12 @@ It should detect the OS itself, but if you want to specify architecture, it is r
 ```php
 // By default
 Maestroerror\HeicToJpg::convertOnMac("image1.heic", "arm64")->saveAs("image1.jpg");
+```
+         
+#### Force arm64 for linux
+In case of linux, for some reason, if it doesn't detect your architecture correct or just the `php-heic-to-jpg-linux-arm64` binary is working for you well, you can force it to use in `convert` and `convertFromUrl` by passing true as third argument:
+```php
+Maestroerror\HeicToJpg::convert("image1.heic", "", true)->saveAs("image.jpg");
 ```
 
 #### isHeic method      

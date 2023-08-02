@@ -46,6 +46,13 @@ class HeicToJpg {
     protected string $arch = "amd64";
 
     /**
+     * Force arm64
+     *
+     * @var bool
+     */
+    protected bool $forceArm = false;
+
+    /**
      * Location of the "heif-converter-image" package's executable
      * 
      * @var string
@@ -139,10 +146,12 @@ class HeicToJpg {
             $this->os = "linux";
         }
 
-        // Fix for the Debian (10/11 Versions), visit the issue for more info (https://github.com/MaestroError/php-heic-to-jpg/issues/22)
-        $debian = str_contains($arch, "x86_64") && $this->os == "linux";
+        if (str_contains($arch, "aarch64") || str_contains($arch, "arm64")){
+            $this->arch = "arm64";
+        }
 
-        if (str_contains($arch, "aarch64") || $debian){
+        // Fix for the Debian (10/11 Versions), visit the issue for more info (https://github.com/MaestroError/php-heic-to-jpg/issues/22)
+        if ($this->forceArm) {
             $this->arch = "arm64";
         }
 
@@ -164,7 +173,8 @@ class HeicToJpg {
         return $this;
     }
 
-    public function checkOS() {
+    public function checkOS($forceArm = false) {
+        $this->forceArm = $forceArm;
         return $this->checkWindowsOS()->checkLinuxOS()->checkMacOS();
     }
 
@@ -301,10 +311,10 @@ class HeicToJpg {
         }
     }
 
-    public static function convert(string $source, string $converterPath = "")
+    public static function convert(string $source, string $converterPath = "", $forceArm = false)
     {
         return (new self)
-            ->checkOS()
+            ->checkOS($forceArm)
             ->setConverterLocation($converterPath)
             ->convertImage($source);
     }
@@ -314,13 +324,13 @@ class HeicToJpg {
         return (new self)->setConverterLocation($converterPath)->convertImageMac($source, $arch);
     }
 
-    public static function convertFromUrl(string $url, string $converterPath = "") {
+    public static function convertFromUrl(string $url, string $converterPath = "", $forceArm = false) {
         // Download image
         $newFileName = "HTTP" . "-" . uniqid(rand(), true);
         file_put_contents($newFileName, file_get_contents($url));
         // Convert image
         $object = (new self)
-            ->checkOS()
+            ->checkOS($forceArm)
             ->setConverterLocation($converterPath)
             ->convertImage($newFileName);
 
