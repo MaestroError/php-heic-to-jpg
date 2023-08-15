@@ -19,6 +19,7 @@ type writerSkipper struct {
 func main() {
 
 	if len(os.Args) > 2 {
+		// Try to convert the file
 		err := convertHeicToJpg(os.Args[1], os.Args[2])
 		if err != nil {
 			fmt.Printf("Error while converting %s: %v \n", os.Args[1], err)
@@ -29,9 +30,10 @@ func main() {
 		Shutdown()
 	}
 
+	// Return the path of the converted image
 	path := "--" + os.Args[2] + "--"
-
 	fmt.Println("JPG:", path)
+
 	Shutdown()
 }
 
