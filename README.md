@@ -25,7 +25,8 @@ $jpg = Maestroerror\HeicToJpg::convert("image1.heic")->get();
 ```
          
 #### For MacOS users
-It should detect the OS itself, but if you want to specify architecture, it is recommended to use `convertOnMac` instead. The second argument is architecture of your system, by default set as "amd64", but you can specify "arm64" (AArch64, M1)
+It should detect the OS itself, but if you want to specify architecture, it is recommended to use `convertOnMac` instead. The second argument is architecture of your system, by default set as "amd64", but you can specify "arm64" (AArch64, M1)       
+*Note: As reported by several users, M1 Macbook works on `amd64` binary file, so if `arm64` doesn't work for you, just try `convertOnMac("image1.heic")`*
 ```php
 // By default
 Maestroerror\HeicToJpg::convertOnMac("image1.heic", "arm64")->saveAs("image1.jpg");
