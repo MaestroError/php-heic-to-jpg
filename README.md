@@ -1,45 +1,58 @@
 # php-heic-to-jpg
-The easiest way to convert HEIC/HEIF images to JPEG with PHP and Laravel framework. It uses binary file created with Go language and has no dependencies on any other PHP libraries, extensions or third-part software       
+
+The easiest way to convert HEIC/HEIF images to JPEG with PHP and Laravel framework. It uses binary file created with Go language and has no dependencies on any other PHP libraries, extensions or third-part software
+
 - [Installation](#installation)
 - [Usage](#usage)
-    - [For MacOS users](#for-macos-users)
-    - [Force arm64 for linux](#force-arm64-for-linux)
-    - [isHeic method](#isheic-method)
-    - [convertFromUrl method](#convertfromurl-method)
-    - [Mdat issue](##handling-mdat-file-conversion-issues)
+  - [For MacOS users](#for-macos-users)
+  - [Force arm64 for linux](#force-arm64-for-linux)
+  - [isHeic method](#isheic-method)
+  - [convertFromUrl method](#convertfromurl-method)
+  - [Mdat issue](##handling-mdat-file-conversion-issues)
 - [Credits](#credits)
-          
-## Installation       
-*Run command in your project's root directory*
+- [Support](#support)
+
+## Installation
+
+_Run command in your project's root directory_
+
 ```
 composer require maestroerror/php-heic-to-jpg
 ```
 
 ## Usage
+
 Using the class "HeicToJpeg" is extremely simple. You need full location of any HEIC image to pass in "convert" function and call "saveAs" (save as file) or "get" (get file contents) methods.
+
 ```php
 // 1. save as file
 Maestroerror\HeicToJpg::convert("image1.heic")->saveAs("image1.jpg");
 // 2. get content (binary) of converted JPG
 $jpg = Maestroerror\HeicToJpg::convert("image1.heic")->get();
 ```
-         
+
 #### For MacOS users
-It should detect the OS itself, but if you want to specify architecture, it is recommended to use `convertOnMac` instead. The second argument is architecture of your system, by default set as "amd64", but you can specify "arm64" (AArch64, M1)       
-*Note: As reported by several users, M1 Macbook works on `amd64` binary file, so if `arm64` doesn't work for you, just try `convertOnMac("image1.heic")`*
+
+It should detect the OS itself, but if you want to specify architecture, it is recommended to use `convertOnMac` instead. The second argument is architecture of your system, by default set as "amd64", but you can specify "arm64" (AArch64, M1)  
+_Note: As reported by several users, M1 Macbook works on `amd64` binary file, so if `arm64` doesn't work for you, just try `convertOnMac("image1.heic")`_
+
 ```php
 // By default
 Maestroerror\HeicToJpg::convertOnMac("image1.heic", "arm64")->saveAs("image1.jpg");
 ```
-         
+
 #### Force arm64 for linux
+
 In case of linux, for some reason, if it doesn't detect your architecture correct or just the `php-heic-to-jpg-linux-arm64` binary is working for you well, (From v1.0.4) you can force it to use in `convert` and `convertFromUrl` by passing true as third argument:
+
 ```php
 Maestroerror\HeicToJpg::convert("image1.heic", "", true)->saveAs("image.jpg");
 ```
 
-#### isHeic method      
+#### isHeic method
+
 Before converting, you can use the isHeic method (contributed by [pbs-dg](https://github.com/pbs-dg)) to check if a file is HEIC format.
+
 ```php
 $fileIsHeic = HeicToJpg::isHeic("image.heic");
 if ($fileIsHeic) {
@@ -47,8 +60,10 @@ if ($fileIsHeic) {
 }
 ```
 
-#### convertFromUrl method      
+#### convertFromUrl method
+
 If your image is available publicly, you can easily convert and save it in your file system using `convertFromUrl` method:
+
 ```php
 Maestroerror\HeicToJpg::convertFromUrl("https://github.com/MaestroError/php-heic-to-jpg/raw/maestro/tests/Unit/images/image1.heic")->saveAs("image1.jpg");
 ```
@@ -72,24 +87,38 @@ HeicToJpg::convert("image.heic", "path/to/your/bin/heif-converter-{linux/windows
 HeicToJpg::convertOnMac("image.heic", "arm64", "path/to/your/bin/heif-converter-macos")->saveAs("image.jpg");
 HeicToJpg::convertFromUrl("SOME_URL", "path/to/your/bin/heif-converter-{linux/windows/macos}")->saveAs("image.jpg");
 ```
+
 With these steps, you should be able to handle the conversion of images that were previously causing issues.
 
 ## Credits
+
 I would like to say thanks to these people. Their work helped me to build heicToJpg file with Go:
+
 - heif parser by @bradfitz (https://github.com/go4org/go4/tree/master/media/heif)
 - libde265 (https://github.com/strukturag/libde265)
 - implementation learnt from libheif (https://github.com/strukturag/libheif)
 - Edd Turtle (https://gophercoding.com/convert-heic-to-jpeg-go/)
 - crazy-max/xgo (https://github.com/crazy-max/xgo)
 
+## Support
+
+Support Our Work? 🌟 You can help us keep the code flowing by making a small donation. Every bit of support goes a long way in maintaining and improving our open-source contributions. Click the button below to contribute. Thank you for your generosity!
+
+[<img src="https://github.com/MaestroError/resources/blob/maestro/buymeamilk/green-2.png" width="300px">](https://www.buymeacoffee.com/maestroerror)
+
+Or use QR code:
+
+[<img src="https://github.com/MaestroError/resources/blob/maestro/buymeamilk/qr-code.png" width="135px">](https://www.buymeacoffee.com/maestroerror)
+
+---
 
 #### Log
-**27/02/2023**       
-Built executables for MacOs (OS X / Darwin) with command `sudo /home/maestroerror/go/bin/xgo --targets=darwin/*  github.com/MaestroError/php-heic-to-jpg`        
-**04/03/2023**         
+
+**27/02/2023**  
+Built executables for MacOs (OS X / Darwin) with command `sudo /home/maestroerror/go/bin/xgo --targets=darwin/*  github.com/MaestroError/php-heic-to-jpg`  
+**04/03/2023**  
 Added pest test and workflows for linux, windows and macos. Run tests locally with `./vendor/bin/pest`
 
-
 ##### To Do
+
 - Find out if it can be used with docker CLI command from PHP, add in docs if yes
-        
