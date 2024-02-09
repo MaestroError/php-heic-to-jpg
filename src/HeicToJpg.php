@@ -316,7 +316,7 @@ class HeicToJpg {
         return (new self)
             ->checkOS($forceArm)
             ->setConverterLocation($converterPath)
-            ->convertImage($source);
+            ->convertImage(htmlspecialchars($source));
     }
 
     public static function convertOnMac(string $source, string $arch = "amd64", string $converterPath = "")
