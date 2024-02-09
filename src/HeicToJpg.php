@@ -185,6 +185,7 @@ class HeicToJpg {
      * @return void
      */
     protected function processImage(string $source) {
+        $source = htmlspecialchars($source);
         $this->heic = $source;
         $newFileName = $source . "-" . uniqid(rand(), true);
         $exeName = $this->exeName;
@@ -316,7 +317,7 @@ class HeicToJpg {
         return (new self)
             ->checkOS($forceArm)
             ->setConverterLocation($converterPath)
-            ->convertImage(htmlspecialchars($source));
+            ->convertImage($source);
     }
 
     public static function convertOnMac(string $source, string $arch = "amd64", string $converterPath = "")
