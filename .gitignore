@@ -22,3 +22,6 @@
 !tests/Unit/images/*
 
 vendor
+
+# JetBrains IDE config
+.idea
