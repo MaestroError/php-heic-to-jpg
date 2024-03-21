@@ -134,7 +134,6 @@ class HeicToJpg {
 
     public function checkWindowsOS(): self {
         $os = strtolower(php_uname('s'));
-        $arch = strtolower(php_uname('m'));
 
         if (self::stringContains($os, 'windows') || self::stringContains($os, 'win')) {
             $this->os = "windows";
