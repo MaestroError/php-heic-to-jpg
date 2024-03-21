@@ -18,13 +18,6 @@ class HeicToJpg {
     private string $jpg;
 
     /**
-     * Stores original HEIC image path
-     *
-     * @var string
-     */
-    protected string $heic;
-
-    /**
      * Executable file name from bin folder
      *
      * @var string
@@ -186,7 +179,6 @@ class HeicToJpg {
      */
     protected function processImage(string $source) {
         $source = htmlspecialchars($source);
-        $this->heic = $source;
         $newFileName = $source . "-" . uniqid(rand(), true);
         $exeName = $this->exeName;
         $command = __DIR__.'/../bin/'.$exeName.' "'.$source.'" "'.$newFileName.'" 2>&1';
