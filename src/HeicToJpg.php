@@ -114,15 +114,19 @@ class HeicToJpg {
         $os = strtolower(php_uname('s'));
         $arch = strtolower(php_uname('m'));
 
-        if (str_contains($os, 'macos') || str_contains($os, 'os x') || str_contains($os, 'darwin') || str_contains($os, 'macintosh')) {
+        if (self::stringContains($os, 'macos')
+            || self::stringContains($os, 'os x')
+            || self::stringContains($os, 'darwin')
+            || self::stringContains($os, 'macintosh')
+        ) {
             $this->os = "darwin";
         }
 
-        if (str_contains($arch, "x86_64") || str_contains($arch, "amd64")) {
+        if (self::stringContains($arch, "x86_64") || self::stringContains($arch, "amd64")) {
             $this->arch = "amd64";
         }
 
-        if (str_contains($arch, "arm")) {
+        if (self::stringContains($arch, "arm")) {
             $this->arch = "arm64";
         }
 
@@ -135,11 +139,11 @@ class HeicToJpg {
         $os = strtolower(php_uname('s'));
         $arch = strtolower(php_uname('m'));
 
-        if (str_contains($os, 'linux')) {
+        if (self::stringContains($os, 'linux')) {
             $this->os = "linux";
         }
 
-        if (str_contains($arch, "aarch64") || str_contains($arch, "arm64")){
+        if (self::stringContains($arch, "aarch64") || self::stringContains($arch, "arm64")){
             $this->arch = "arm64";
         }
 
@@ -157,7 +161,7 @@ class HeicToJpg {
         $os = strtolower(php_uname('s'));
         $arch = strtolower(php_uname('m'));
 
-        if (str_contains($os, 'windows') || str_contains($os, 'win')) {
+        if (self::stringContains($os, 'windows') || self::stringContains($os, 'win')) {
             $this->os = "windows";
         }
 
@@ -366,4 +370,8 @@ class HeicToJpg {
         return false;
     }
 
+    private static function stringContains(string $haystack, string $needle): bool
+    {
+        return strpos($haystack, $needle) !== false;
+    }
 }
