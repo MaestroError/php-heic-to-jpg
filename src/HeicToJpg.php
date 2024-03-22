@@ -6,56 +6,36 @@ class HeicToJpg {
 
     /**
      * Stores binary content of JPG file
-     *
      */
-    private $binary;
+    private string $binary;
 
     /**
      * Stores converted JPG file location
-     *
-     * @var string
      */
     private string $jpg;
 
     /**
-     * Stores original HEIC image path
-     *
-     * @var string
-     */
-    protected string $heic;
-
-    /**
      * Executable file name from bin folder
-     *
-     * @var string
      */
     protected string $exeName = "heicToJpg";
 
     /**
      * OS of server
-     *
-     * @var string
      */
     protected string $os = "linux";
 
     /**
      * Architecture of server
-     *
-     * @var string
      */
     protected string $arch = "amd64";
 
     /**
      * Force arm64
-     *
-     * @var bool
      */
     protected bool $forceArm = false;
 
     /**
      * Location of the "heif-converter-image" package's executable
-     * 
-     * @var string
      */
     protected string $libheifConverterLocation = "";
 
@@ -63,10 +43,8 @@ class HeicToJpg {
 
     /**
      * Takes full location of file as a string
-     *
-     * @param string $source
      */
-    public function convertImage(string $source) {
+    public function convertImage(string $source): self {
         $this->checkLinuxOS();
         $this->processImage($source);
         $this->extractBinary();
@@ -75,10 +53,8 @@ class HeicToJpg {
 
     /**
      * The same as convertImage but for MacOS users
-     *
-     * @param string $source
      */
-    public function convertImageMac(string $source, $arch = "amd64") {
+    public function convertImageMac(string $source, string $arch = "amd64"): self {
         $this->setDarwinExe($arch);
         $this->processImage($source);
         $this->extractBinary();
@@ -87,49 +63,45 @@ class HeicToJpg {
 
     /**
      * Saves JPG file as $path (Full location is preferable)
-     *
-     * @param string $path
-     * @return bool
      */
-    public function saveAs(string $path) {
+    public function saveAs(string $path): bool {
         file_put_contents($path, $this->binary);
         return $this->exit();
     }
 
     /**
-     * Removes temporary JPG file and returns it's content (binary)
-     *
-     * @return string
+     * Removes temporary JPG file and returns its content (binary)
      */
-    public function get() {
+    public function get(): string {
         $this->exit();
         return $this->binary;
     }
-
     
-    public function setConverterLocation(string $path) {
+    public function setConverterLocation(string $path): self {
         $this->libheifConverterLocation = $path;
         return $this;
     }
 
     /**
      * Checks is used on macOS or not
-     *
-     * @return self
      */
     public function checkMacOS(): self {
         $os = strtolower(php_uname('s'));
         $arch = strtolower(php_uname('m'));
 
-        if (str_contains($os, 'macos') || str_contains($os, 'os x') || str_contains($os, 'darwin') || str_contains($os, 'macintosh')) {
+        if (self::stringContains($os, 'macos')
+            || self::stringContains($os, 'os x')
+            || self::stringContains($os, 'darwin')
+            || self::stringContains($os, 'macintosh')
+        ) {
             $this->os = "darwin";
         }
 
-        if (str_contains($arch, "x86_64") || str_contains($arch, "amd64")) {
+        if (self::stringContains($arch, "x86_64") || self::stringContains($arch, "amd64")) {
             $this->arch = "amd64";
         }
 
-        if (str_contains($arch, "arm")) {
+        if (self::stringContains($arch, "arm")) {
             $this->arch = "arm64";
         }
 
@@ -142,11 +114,11 @@ class HeicToJpg {
         $os = strtolower(php_uname('s'));
         $arch = strtolower(php_uname('m'));
 
-        if (str_contains($os, 'linux')) {
+        if (self::stringContains($os, 'linux')) {
             $this->os = "linux";
         }
 
-        if (str_contains($arch, "aarch64") || str_contains($arch, "arm64")){
+        if (self::stringContains($arch, "aarch64") || self::stringContains($arch, "arm64")){
             $this->arch = "arm64";
         }
 
@@ -162,9 +134,8 @@ class HeicToJpg {
 
     public function checkWindowsOS(): self {
         $os = strtolower(php_uname('s'));
-        $arch = strtolower(php_uname('m'));
 
-        if (str_contains($os, 'windows') || str_contains($os, 'win')) {
+        if (self::stringContains($os, 'windows') || self::stringContains($os, 'win')) {
             $this->os = "windows";
         }
 
@@ -173,20 +144,16 @@ class HeicToJpg {
         return $this;
     }
 
-    public function checkOS($forceArm = false) {
+    public function checkOS($forceArm = false): self {
         $this->forceArm = $forceArm;
         return $this->checkWindowsOS()->checkLinuxOS()->checkMacOS();
     }
 
     /**
      * Runs heicToJpg CLI tool to convert file
-     *
-     * @param string $source
-     * @return void
      */
-    protected function processImage(string $source) {
+    protected function processImage(string $source): void {
         $source = htmlspecialchars($source);
-        $this->heic = $source;
         $newFileName = $source . "-" . uniqid(rand(), true);
         $exeName = $this->exeName;
         $command = __DIR__.'/../bin/'.$exeName.' "'.$source.'" "'.$newFileName.'" 2>&1';
@@ -207,7 +174,7 @@ class HeicToJpg {
         }
     }
 
-    protected function tryToConvertWithLibheif($source, $newFile) {
+    protected function tryToConvertWithLibheif(string $source, string $newFile): bool {
         // ./vendor/bin/heif-converter-linux heic input.heic output.png
         if (empty($this->libheifConverterLocation)) {
             $this->libheifConverterLocation = __DIR__.'/../bin/' . "heif-converter-" . $this->os;
@@ -232,22 +199,15 @@ class HeicToJpg {
 
     /**
      * Read the content of file
-     *
-     * @return void
      */
-    protected function extractBinary() {
-        $this->binary = file_get_contents($this->jpg);
+    protected function extractBinary(): void {
+        $this->binary = file_get_contents($this->jpg) ?: '';
     }
 
     /**
      * Returns string between $start and $end
-     *
-     * @param string $string
-     * @param string $start
-     * @param string $end
-     * @return void
      */
-    private function getStringBetween(string $string, string $start, string $end){
+    private function getStringBetween(string $string, string $start, string $end): string {
         $string = ' ' . $string;
         $ini = strpos($string, $start);
         if ($ini == 0) return '';
@@ -259,9 +219,9 @@ class HeicToJpg {
     /**
      * Removes converted JPG file
      *
-     * @return bool
+     * @throws \Exception if JPG file does not exist
      */
-    private function exit() {
+    private function exit(): bool {
         if(file_exists($this->jpg)) {
             unlink($this->jpg);
             return true;
@@ -286,10 +246,8 @@ class HeicToJpg {
 
     /**
      * Check os and arch properties to set executable name correctly
-     *
-     * @return void
      */
-    private function checkDarwinExe() {
+    private function checkDarwinExe(): void {
         if ($this->os == "darwin" && $this->arch == "amd64") {
             $this->exeName = "php-heic-to-jpg-darwin-amd64";
         }
@@ -300,11 +258,8 @@ class HeicToJpg {
 
     /**
      * Sets macOS executable by architecture
-     *
-     * @param string $arch
-     * @return void
      */
-    private function setDarwinExe(string $arch) {
+    private function setDarwinExe(string $arch): void {
         if ($arch == "arm64") {
             $this->exeName = "php-heic-to-jpg-darwin-arm64";
         } else {
@@ -312,7 +267,7 @@ class HeicToJpg {
         }
     }
 
-    public static function convert(string $source, string $converterPath = "", $forceArm = false)
+    public static function convert(string $source, string $converterPath = "", $forceArm = false): self
     {
         return (new self)
             ->checkOS($forceArm)
@@ -320,12 +275,12 @@ class HeicToJpg {
             ->convertImage($source);
     }
 
-    public static function convertOnMac(string $source, string $arch = "amd64", string $converterPath = "")
+    public static function convertOnMac(string $source, string $arch = "amd64", string $converterPath = ""): self
     {
         return (new self)->setConverterLocation($converterPath)->convertImageMac($source, $arch);
     }
 
-    public static function convertFromUrl(string $url, string $converterPath = "", $forceArm = false) {
+    public static function convertFromUrl(string $url, string $converterPath = "", $forceArm = false): self {
         // Download image
         $newFileName = "HTTP" . "-" . uniqid(rand(), true);
         file_put_contents($newFileName, file_get_contents($url));
@@ -344,9 +299,6 @@ class HeicToJpg {
 
     /**
      * Check if file is in HEIC format.
-     *
-     * @param string $path
-     * @return bool
      */
     public static function isHeic(string $path): bool
     {
@@ -374,4 +326,8 @@ class HeicToJpg {
         return false;
     }
 
+    private static function stringContains(string $haystack, string $needle): bool
+    {
+        return strpos($haystack, $needle) !== false;
+    }
 }
