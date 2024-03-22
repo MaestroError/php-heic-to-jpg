@@ -1,33 +1,33 @@
 {
-    "name": "maestroerror/php-heic-to-jpg",
-    "description": "Converts HEIC/HEIF image to JPG type, without any dependencies",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Maestroerror\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "maestroerror",
-            "email": "revaz.gh@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "bin": [
-        "bin/heicToJpg",
-        "bin/heicToJpgWin"
-	],
-    "require-dev": {
-        "pestphp/pest": "2.x-dev"
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "require": {
-        "php": ">=7.4",
-        "maestroerror/heif-converter": "0.2"
+  "name": "maestroerror/php-heic-to-jpg",
+  "description": "Converts HEIC/HEIF image to JPG type, without any dependencies",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Maestroerror\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "maestroerror",
+      "email": "revaz.gh@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "bin": [
+    "bin/heicToJpg",
+    "bin/heicToJpgWin"
+  ],
+  "require-dev": {
+    "pestphp/pest": "2.x-dev"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "require": {
+    "maestroerror/heif-converter": "0.2",
+    "php": ">=7.4"
+  }
 }

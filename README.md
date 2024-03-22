@@ -122,3 +122,8 @@ Added pest test and workflows for linux, windows and macos. Run tests locally wi
 ##### To Do
 
 - Find out if it can be used with docker CLI command from PHP, add in docs if yes
+- Try to update to Go 1.21 version
+- Add github action for generating executables
+- Add issue #33 and solution as arm64 example
+- Add changes from issue #28 (try/catch)
+- Add alternative packages in Docs from this issue [comment](https://github.com/MaestroError/php-heic-to-jpg/issues/25#issuecomment-1903901459)
