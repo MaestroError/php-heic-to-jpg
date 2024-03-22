@@ -27,6 +27,7 @@
         }
     },
     "require": {
+        "php": ">=7.4",
         "maestroerror/heif-converter": "0.2"
     }
 }
