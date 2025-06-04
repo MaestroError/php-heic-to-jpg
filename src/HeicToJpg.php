@@ -180,7 +180,7 @@ class HeicToJpg {
     protected function tryToConvertWithLibheif(string $source, string $newFile): bool {
         // ./vendor/bin/heif-converter-linux heic input.heic output.png
         if (empty($this->libheifConverterLocation)) {
-            $this->libheifConverterLocation = __DIR__.'/../bin/' . "heif-converter-" . $this->os;
+            $this->libheifConverterLocation = dirname(__DIR__, 2) . '/heif-converter/bin/heif-converter-' . $this->os;
         }
         // If libheif converter is available, try to convert
         if (file_exists($this->libheifConverterLocation)) {
