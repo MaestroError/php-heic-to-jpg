@@ -1,4 +1,4 @@
-github.com/adrium/goheif v0.0.0-20230113233934-ca402e77a786 h1:zvgtcRb2B5gynWjm+Fc9oJZPHXwmcgyH0xCcNm6Rmo4=
-github.com/adrium/goheif v0.0.0-20230113233934-ca402e77a786/go.mod h1:aKVJoQ0cc9K5Xb058XSnnAxXLliR97qbSqWBlm5ca1E=
+github.com/jdeng/goheif v0.0.0-20260309214039-46ce8d592019 h1:0ZoFwHuWMCMXTSZu6MpytImaIdRE6SullDaPzSw8grM=
+github.com/jdeng/goheif v0.0.0-20260309214039-46ce8d592019/go.mod h1:whEdtAJfm8ia675sbmIATUVAT/P9gnb7zHpR3hzqst0=
 github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd h1:CmH9+J6ZSsIjUK3dcGsnCnO41eRBOnY12zwkn5qVwgc=
 github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd/go.mod h1:hPqNNc0+uJM6H+SuU8sEs5K5IQeKccPqeSjfgcKGgPk=
