@@ -117,12 +117,13 @@ Or use QR code:
 **27/02/2023**  
 Built executables for MacOs (OS X / Darwin) with command `sudo /home/maestroerror/go/bin/xgo --targets=darwin/*  github.com/MaestroError/php-heic-to-jpg`  
 **04/03/2023**  
-Added pest test and workflows for linux, windows and macos. Run tests locally with `./vendor/bin/pest`
+Added pest test and workflows for linux, windows and macos. Run tests locally with `./vendor/bin/pest`  
+**26/10/2026**  
+Updated to Go 1.26 and rebuilt all executables with Go 1.26.9 (cgo). Pass `-mod=mod` to `go build`, otherwise Go treats composer's `vendor` directory as a Go vendor directory. MacOS executables are built natively with `MACOSX_DEPLOYMENT_TARGET=12.0`. Linux and Windows executables are statically linked, built in the `golang:1.26.9-bookworm` docker image with `gcc-x86-64-linux-gnu`, `gcc-aarch64-linux-gnu` and `gcc-mingw-w64-x86-64` (use the `-posix` mingw compilers, libde265 needs `std::mutex`)
 
 ##### To Do
 
 - Find out if it can be used with docker CLI command from PHP, add in docs if yes
-- Try to update to Go 1.21 version
 - Add github action for generating executables
 - Add issue #33 and solution as arm64 example
 - Add changes from issue #28 (try/catch)
